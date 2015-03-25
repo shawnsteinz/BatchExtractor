@@ -107,7 +107,7 @@ class Gui:
         frame.rowconfigure(2, weight=1)
         frame.rowconfigure(3, weight=1)
 
-        ttk.Label(frame, text="TorrentExtractor", font="TkDefaultFont 24 bold").grid(column=0,
+        ttk.Label(frame, text="BatchExtractor", font="TkDefaultFont 24 bold").grid(column=0,
                                                                                      row=0, columnspan=4, sticky=NW, pady=5)
         ttk.Label(frame, text="Select source folder:").grid(column=0, row=1, pady=20, sticky=W)
         source_folder_entry = ttk.Entry(frame, textvariable=self.source, width=40)
