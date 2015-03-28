@@ -77,7 +77,8 @@ class Command:
             if return_value == 0:
                 self.completed.append(command[1])
 
-        dump(self.completed,  open(self.database, 'wb'))
+        x = load(open(self.database, 'rb'))
+        dump(x + self.completed,  open(self.database, 'wb'))
 
 
 class Gui:
@@ -98,14 +99,14 @@ class Gui:
 
         frame = ttk.Frame(padding="4")
         frame.grid(column=0, row=0, sticky=c)
-        frame.columnconfigure(0, weight=0)
+        '''frame.columnconfigure(0, weight=0)
         frame.columnconfigure(1, weight=1)
         frame.columnconfigure(2, weight=0)
         frame.columnconfigure(3, weight=0)
         frame.rowconfigure(0, weight=1)
         frame.rowconfigure(1, weight=1)
         frame.rowconfigure(2, weight=1)
-        frame.rowconfigure(3, weight=1)
+        frame.rowconfigure(3, weight=1)'''
 
         ttk.Label(frame, text="BatchExtractor", font="TkDefaultFont 24 bold").grid(column=0,
                                                                                      row=0, columnspan=4, sticky=NW, pady=5)
