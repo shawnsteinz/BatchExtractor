@@ -122,7 +122,7 @@ class Gui:
         browse_button2 = ttk.Button(frame, text="Browse...", command=self.select_destination)
         browse_button2.grid(column=4, row=2, sticky=W)
 
-        ttk.Label(frame, text="Select database file:").grid(column=0, row=3, pady=20, sticky=W)
+        ttk.Label(frame, text="Select database.py file:").grid(column=0, row=3, pady=20, sticky=W)
         database_file_entry = ttk.Entry(frame, textvariable=self.database, width=40)
         database_file_entry.grid(column=1, row=3, sticky=EW)
         browse_button3 = ttk.Button(frame, text="Browse...", command=self.select_database)
@@ -174,7 +174,7 @@ class Gui:
                     command = Command(destination_folder, finder.get_locations(), database_file)
                     command.execute()
                 else:
-                    print("database is not given")
+                    print("database.py is not given")
             else:
                 print("destination is not given")
         else:
