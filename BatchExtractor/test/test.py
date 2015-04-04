@@ -1,7 +1,14 @@
 __author__ = 'Misja'
 
-from pickle import *
+from BatchExtractor.database import ShelveHandler
 
-database = {'completed': [], 'excluded': [], 'settings': {'origin': 'E:\Test\SRC', 'destination': 'E:\Test\DES'}}
-open('E:\Test\database.pkl', 'a')
-dump(database,  open('E:\Test\database.pkl', 'wb'))
+sh = ShelveHandler()
+sh.set_completed([])
+sh.set_excluded([])
+sh.set_setting('src', 'E:\\Test\\SRC')
+sh.set_setting('des', 'E:\\Test\\DES')
+sh.close()
+
+
+sh = ShelveHandler()
+print(sh.get_completed())

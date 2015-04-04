@@ -1,22 +1,22 @@
 __author__ = 'Misja'
 
-from BatchExtractor.database import DatabaseHandler
+from BatchExtractor.database import ShelveHandler
 from BatchExtractor.utility import *
 from BatchExtractor.command import *
 
-db = DatabaseHandler('E:\Test\database.pkl')
-files = filter(db.get_completed(), db.get_excluded(), search(db.get_setting('origin')))
+sh = ShelveHandler()
+files = filter_list(sh.get_completed(), sh.get_excluded(), search(sh.get_setting('src')))
 commands = []
 
 for file in files:
-    commands.append(Command(file, db.get_setting('destination')))
+    commands.append(Command(file, sh.get_setting('des')))
+
+for command in commands:
+    print(command.to_string())
 
 handler = CommandHandler(commands)
 handler.execute()
 
-db.set_completed(handler.completed)
-db.save()
-
-
-
+sh.set_completed(handler.completed)
+sh.close()
 

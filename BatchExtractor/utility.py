@@ -26,9 +26,10 @@ def search(search_location):
 def filter_list(completed, excluded, files):
 
         filtered_list = []
+        temp = completed + excluded
 
         for file in files:
-            if file not in completed or file not in excluded:
+            if file not in temp:
                 filtered_list.append(file)
 
         return filtered_list
