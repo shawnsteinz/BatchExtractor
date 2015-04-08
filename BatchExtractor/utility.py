@@ -3,10 +3,7 @@ __author__ = 'Misja'
 from os import path, listdir
 
 
-allowed_file_extensions = ('.rar', '.zip', '.7z')
-
-
-def search(search_location):
+def search(search_location, allowed_file_extensions):
 
     files = []
     all_files = listdir(search_location)
