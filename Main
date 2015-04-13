@@ -1,0 +1,31 @@
+from BatchExtractor.Model.File import FileList
+from BatchExtractor.Model.Task import TaskHandler
+import BatchExtractor.Gui.Gui_Builder
+from BatchExtractor.Controller.Database import ShelveHandler
+
+class Main():
+
+    def __init__(self):
+        self.sh = ShelveHandler('E:\\Test\\Shelve')
+        self.sh.set_setting('src', 'E:\\Test\\SRC')
+        self.sh.set_setting('des', 'E:\\Test\\DES')
+        self.sh.set_setting('ext', ['.rar', '.zip', '.7z'])
+
+    def main(self):
+        BatchExtractor.Gui.Gui_Builder.Gui(self.sh).start()
+        
+    def extract(self):
+
+        fl = FileList(self.sh.get_setting('src'), self.sh.get_setting('ext'))
+        fl.remove_files_by_tasks(self.sh.get_excluded(), self.sh.get_completed())
+        th = TaskHandler(fl.get_files(), self.sh.get_setting('des'))
+        th.execute_tasks()
+        self.sh.set_completed(th.successful_tasks)
+
+
+        for task in self.sh.get_completed():
+            print('Task %s || %s || %s' % (task.file.location, task.destination_directory, task.file.get_size()))
+
+
+if __name__ == '__main__':
+    Main().main()
