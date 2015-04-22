@@ -5,7 +5,6 @@ import BatchExtractor.Gui.Main_Screen
 
 
 class Gui:
-
     def __init__(self, sh):
         self.root = Tk()
         self.sh = sh
@@ -17,7 +16,6 @@ class Gui:
         self.build_gui()
 
     def build_gui(self):
-
         self.root.geometry("%dx%d" % (800, 600))
         self.root.title('BatchExtractor')
 
@@ -25,7 +23,8 @@ class Gui:
         nb.pack(fill='both', expand='yes')
 
         main = BatchExtractor.Gui.Main_Screen.Main_Screen(self.sh).build_main_screen()
-        settings_window = BatchExtractor.Gui.Settings_Screen.Settings_Screen(self.source, self.destination, self.sh).build_settings_screen()
+        settings_window = BatchExtractor.Gui.Settings_Screen.Settings_Screen(self.source, self.destination,
+                                                                             self.sh).build_settings_screen()
 
         nb.add(main, text='Main')
         nb.add(settings_window, text='Settings')
