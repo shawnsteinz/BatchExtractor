@@ -3,7 +3,6 @@ from tkinter import *
 
 
 class Settings_Screen:
-
     def __init__(self, source, destination, shelve_handler):
         self.source = source
         self.destination = destination

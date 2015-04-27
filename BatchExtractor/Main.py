@@ -13,7 +13,7 @@ class Main():
 
     def main(self):
         BatchExtractor.Gui.Gui_Builder.Gui(self.sh).start()
-        
+
     def extract(self):
 
         fl = FileList(self.sh.get_setting('src'), self.sh.get_setting('ext'))
@@ -21,11 +21,6 @@ class Main():
         th = TaskHandler(fl.get_files(), self.sh.get_setting('des'))
         th.execute_tasks()
         self.sh.set_completed(th.successful_tasks)
-
-
-        for task in self.sh.get_completed():
-            print('Task %s || %s || %s' % (task.file.location, task.destination_directory, task.file.get_size()))
-
 
 if __name__ == '__main__':
     Main().main()
