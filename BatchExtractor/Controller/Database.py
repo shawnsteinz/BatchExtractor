@@ -4,7 +4,7 @@ import shelve
 class ShelveHandler():
 
     def __init__(self, shelve_location):
-         self.shelve = shelve.open(shelve_location, flag='c')
+         self.shelve = shelve.open(shelve_location, flag='c', writeback=True)
       
     def get_completed(self):
         try:

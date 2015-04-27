@@ -6,9 +6,9 @@ from BatchExtractor.Controller.Database import ShelveHandler
 class Main():
 
     def __init__(self):
-        self.sh = ShelveHandler('E:\\Test\\Shelve')
-        self.sh.set_setting('src', 'E:\\Test\\SRC')
-        self.sh.set_setting('des', 'E:\\Test\\DES')
+        self.sh = ShelveHandler('D:\\Test\\Shelve')
+        self.sh.set_setting('src', 'D:\\Test\\SRC')
+        self.sh.set_setting('des', 'D:\\Test\\DES')
         self.sh.set_setting('ext', ['.rar', '.zip', '.7z'])
 
     def main(self):
