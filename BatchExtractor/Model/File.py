@@ -23,6 +23,9 @@ class File():
 
         return size
 
+    def get_location(self):
+        return self.location
+
     def get_creation_datetime(self):
         d = datetime.fromtimestamp(self.creation_time)
         return d.ctime()

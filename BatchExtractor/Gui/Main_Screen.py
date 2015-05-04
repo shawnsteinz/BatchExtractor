@@ -14,14 +14,15 @@ class Main_Screen:
         self.label = []
         self.checkbutton = []
         self.list_header = ['Name', 'size']
-        self.data_list = []
+        self.data_list = ['','']
         self.fill_data_list()
         self.tree = None
 
     def build_main_screen(self):
         main_screen  = ttk.Frame()
         container = ttk.Frame(main_screen)
-        container.grid(column=0, row=0)
+        container.pack(fill='both', expand=True)
+
 
         # create a treeview with dual scrollbars
         self.tree = ttk.Treeview(columns=self.list_header, show="headings")
@@ -39,9 +40,11 @@ class Main_Screen:
         self._build_tree()
 
         start_button = Button(main_screen, text="Start", height='2', width='10', command=self.run)
-        start_button.grid(row=1, column=1, padx=(20, 0), pady=(10, 0))
+        start_button.pack(side = BOTTOM)
+        #start_button.grid(row=1, column=1, padx=(20, 0), pady=(10, 0))
         self.progressbar = ttk.Progressbar(main_screen, orient='horizontal', mode='determinate')
-        self.progressbar.grid(row=1, column=0, sticky=W + E, padx=(1, 0), pady=(0, 0))
+        self.progressbar.pack(fill='both',side = BOTTOM)
+        #self.progressbar.grid(row=1, column=0, sticky=W + E, padx=(1, 0), pady=(0, 0))
 
         return main_screen
 
@@ -50,17 +53,17 @@ class Main_Screen:
             self.tree.heading(col, text=col.title(),
                 command=lambda c=col: self.sortby(self.tree, c, 0))
             # adjust the column's width to the header string
-            self.tree.column(col,
-                width=tkFont.Font().measure(col.title()))
+            self.tree.column(col,width=tkFont.Font().measure(col.title()))
 
         for item in self.data_list:
             self.tree.insert('', 'end', values=item)
             # adjust column's width if necessary to fit each value
+            """
             for ix, val in enumerate(item):
                 col_w = tkFont.Font().measure(val)
                 if self.tree.column(self.list_header[ix],width=None)<col_w:
                     self.tree.column(self.list_header[ix], width=col_w)
-
+            """
     def sortby(self, tree, col, descending):
         """sort tree contents when a column header is clicked on"""
         # grab values to sort
@@ -77,9 +80,14 @@ class Main_Screen:
             int(not descending)))
 
     def fill_data_list(self):
-        print("hey")
 
-
+        list = []
+        for i in self.files.get_files():
+            new = [i.location]
+            for j in self.files.get_files():
+                new.append(j.archive_size)
+            list.append(new)
+        self.data_list = list
 
     def fill_frame(self):
 
