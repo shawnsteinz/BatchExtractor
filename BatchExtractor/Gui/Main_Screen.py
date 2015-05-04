@@ -1,6 +1,7 @@
 from tkinter import *
 import BatchExtractor.Main
 import tkinter.ttk as ttk
+import tkinter.font as tkFont
 
 
 
@@ -12,31 +13,73 @@ class Main_Screen:
         self.files = files
         self.label = []
         self.checkbutton = []
-
+        self.list_header = ['Name', 'size']
+        self.data_list = []
+        self.fill_data_list()
+        self.tree = None
 
     def build_main_screen(self):
-        self.main_screen = Frame()
-        canvas = Canvas(self.main_screen, bg="black")
-        self.frame = Frame(canvas, bg="black", relief=SUNKEN)
-        scrollbar = Scrollbar(self.main_screen, orient="vertical", command=canvas.yview)
-        scrollbar.grid(row=0, column=1, sticky=N + S + W)
-        canvas.configure(yscrollcommand=scrollbar.set)
-        canvas.grid(row=0, column=0)
-        canvas.create_window((0, 0), window=self.frame, anchor='nw')
-        self.fill_frame()
-        start_button = Button(self.main_screen, text="Start", height='2', width='10', command=self.run)
+        main_screen  = ttk.Frame()
+        container = ttk.Frame(main_screen)
+        container.grid(column=0, row=0)
+
+        # create a treeview with dual scrollbars
+        self.tree = ttk.Treeview(columns=self.list_header, show="headings")
+        vsb = ttk.Scrollbar(orient="vertical",
+            command=self.tree.yview)
+        hsb = ttk.Scrollbar(orient="horizontal",
+            command=self.tree.xview)
+        self.tree.configure(yscrollcommand=vsb.set,
+            xscrollcommand=hsb.set)
+        self.tree.grid(column=0, row=0, sticky='nsew', in_=container)
+        vsb.grid(column=1, row=0, sticky='ns', in_=container)
+        hsb.grid(column=0, row=1, sticky='ew', in_=container)
+        container.grid_columnconfigure(0, weight=1)
+        container.grid_rowconfigure(0, weight=1)
+        self._build_tree()
+
+        start_button = Button(main_screen, text="Start", height='2', width='10', command=self.run)
         start_button.grid(row=1, column=1, padx=(20, 0), pady=(10, 0))
-        self.progressbar = ttk.Progressbar(self.main_screen, orient='horizontal', mode='determinate')
+        self.progressbar = ttk.Progressbar(main_screen, orient='horizontal', mode='determinate')
         self.progressbar.grid(row=1, column=0, sticky=W + E, padx=(1, 0), pady=(0, 0))
 
-        def resize_to_window(event):
-            size = (self.frame.winfo_reqwidth(), self.frame.winfo_reqheight())
-            canvas.config(scrollregion="0 0 %s %s" % size)
-            if self.frame.winfo_reqwidth() != canvas.winfo_width():
-                canvas.config(width=self.frame.winfo_reqwidth())
+        return main_screen
 
-        self.frame.bind('<Configure>', resize_to_window)
-        return self.main_screen
+    def _build_tree(self):
+        for col in self.list_header:
+            self.tree.heading(col, text=col.title(),
+                command=lambda c=col: self.sortby(self.tree, c, 0))
+            # adjust the column's width to the header string
+            self.tree.column(col,
+                width=tkFont.Font().measure(col.title()))
+
+        for item in self.data_list:
+            self.tree.insert('', 'end', values=item)
+            # adjust column's width if necessary to fit each value
+            for ix, val in enumerate(item):
+                col_w = tkFont.Font().measure(val)
+                if self.tree.column(self.list_header[ix],width=None)<col_w:
+                    self.tree.column(self.list_header[ix], width=col_w)
+
+    def sortby(self, tree, col, descending):
+        """sort tree contents when a column header is clicked on"""
+        # grab values to sort
+        data = [(tree.set(child, col), child) \
+            for child in tree.get_children('')]
+        # if the data to be sorted is numeric change to float
+        #data =  change_numeric(data)
+        # now sort the data in place
+        data.sort(reverse=descending)
+        for ix, item in enumerate(data):
+            tree.move(item[1], '', ix)
+        # switch the heading so it will sort in the opposite direction
+        tree.heading(col, command=lambda col=col: self.sortby(tree, col, \
+            int(not descending)))
+
+    def fill_data_list(self):
+        print("hey")
+
+
 
     def fill_frame(self):
 
@@ -64,7 +107,7 @@ class Main_Screen:
     def run(self):
         """self.progressbar.start(50)"""
         BatchExtractor.Main.Main().extract()
-        self.clear_frame()
+        """self.clear_frame()"""
 
 
 
