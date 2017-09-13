@@ -1,6 +1,3 @@
-__author__ = 'Misja'
-
-
 from subprocess import call
 
 class TaskHandler():

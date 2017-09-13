@@ -1,6 +1,4 @@
-__author__ = 'Misja'
-
-from BatchExtractor.Controller.Database import ShelveHandler
+from BatchExtractor.Database.Database import ShelveHandler
 from BatchExtractor.Model.File import FileList
 from BatchExtractor.Model.Task import TaskHandler
 

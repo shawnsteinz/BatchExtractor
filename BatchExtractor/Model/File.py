@@ -1,4 +1,3 @@
-__author__ = 'Misja'
 
 from os import stat, path, walk
 from operator import attrgetter
