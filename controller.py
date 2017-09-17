@@ -15,7 +15,6 @@ class Controller:
 
     def discover(self):
         self.files.discovery(self.read_completed_extractions)
-        
         '''set the view to the new files'''
 
     def extract(self):
