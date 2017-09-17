@@ -1,10 +1,15 @@
 from model import Files
 from view import *
+from tkinter import *
 
-class Controller():
+
+class Controller:
     def __init__(self):
-        self.files_to_skip = [] # from global
-        self.files = Files(allowed_file_ext=['.rar', '.zip', '.7z'], extract_dir='', files_to_skip=self.files_to_skip, search_dir='')
+        self.files_to_skip = []  # from global
+        self.root = Tk()
+        self.view = View(self.root)
+        self.files = Files(allowed_file_ext=['.rar', '.zip', '.7z'], extract_dir='', files_to_skip=self.files_to_skip,
+                           search_dir='')
         '''add the view as class vars'''
 
     def dicovery(self):
@@ -19,10 +24,5 @@ class Controller():
         '''write the files to skip to file'''
 
     def run(self):
-        ''' Starts the mainloop
-        self.root.title("Tkinter MVC example")
         self.root.deiconify()
         self.root.mainloop()
-        '''
-
-
