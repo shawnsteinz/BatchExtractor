@@ -8,18 +8,17 @@ class Controller:
         self.files_to_skip = []  # from global
         self.root = Tk()
         self.view = View(self.root)
-        self.view.sidePanel.dicovery.bind(self.dicovery)
+        self.view.sidePanel.discover.bind(self.discover)
         self.view.sidePanel.extract.bind(self.extract)
-        self.files = Files(allowed_file_ext=['.rar', '.zip', '.7z'], extract_dir='', files_to_skip=self.files_to_skip,
-                           search_dir='')
+        self.files = Files( extract_dir='', search_dir='')
         '''add the view as class vars'''
 
-    def dicovery(self):
-        self.model.discovery()
+    def discover(self):
+        self.files.discovery()
         '''set the view to the new files'''
 
     def extract(self):
-        for file in self.model.files:
+        for file in self.files.files:
             file.extract()
             '''update progress bar and file in the mian screen'''
             '''updated the files to skip list'''
