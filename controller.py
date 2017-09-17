@@ -14,15 +14,23 @@ class Controller:
         '''add the view as class vars'''
 
     def discover(self):
-        self.files.discovery()
+        self.files.discovery(self.read_completed_extrations)
         '''set the view to the new files'''
 
     def extract(self):
         for file in self.files.files:
-            file.extract()
+            if file.extract() is True:
+                self.write_completed_extraction(file.file_location)
             '''update progress bar and file in the mian screen'''
-            '''updated the files to skip list'''
-        '''write the files to skip to file'''
+
+    def read_completed_extrations(self):
+        with open('', 'r') as f:
+            completed_extractions = f.readlines()
+            return completed_extractions
+
+    def write_completed_extraction(self, completed_extraction_name):
+        with open('', 'a') as f:
+            f.write(completed_extraction_name)
 
     def run(self):
         self.root.deiconify()
