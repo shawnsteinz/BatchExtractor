@@ -13,7 +13,14 @@ class View:
         self.tree.pack()
 
     def fill_tree(self, file_list):
+<<<<<<< .merge_file_a07208
         for item in file_list:
+=======
+        for i in self.tree.get_children():
+            self.tree.delete(i)
+
+        for item in file_list.files:
+>>>>>>> .merge_file_a22864
             self.tree.insert('', 'end', values=item.file_location)
 
 
