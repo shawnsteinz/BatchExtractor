@@ -1,22 +1,23 @@
 from subprocess import call
 from os import path, walk
 
+
 '''Builds a list of file objects'''
 class Files():
-    def __init__(self, search_dir, extract_dir, allowed_file_ext, files_to_skip):
+    def __init__(self, search_dir, extract_dir, allowed_file_ext=('.rar', '.zip', '.7z')):
         self.files = []
         self.search_dir = search_dir
-        self.allowed_file_ext = allowed_file_ext
         self.extract_dir = extract_dir
-        self.files_to_skip = files_to_skip
+        self.allowed_file_ext = allowed_file_ext
 
-    '''Searches a folder for files and fills the file list with file classes'''
-    def discovery(self):
+    '''Searches a folder for files and fills the file list with file classes. 
+    Optional add an additional filter to skip files'''
+    def discovery(self, files_to_skip):
         for directory_path, directory_name, files in walk(self.search_dir):
             for file_name in files:
                 if file_name.lower().endswith(tuple(self.allowed_file_ext)) \
-                        and file_name.lower() not in self.files.to_skip:
-                    self.files.append(File(path.join(directory_path, file_name, self.extract_dir)))
+                        and file_name.lower() not in files_to_skip:
+                    self.files.append(File(path.join(directory_path, file_name), self.extract_dir))
 
 '''File object that can extract himself'''
 class File():
