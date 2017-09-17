@@ -7,13 +7,13 @@ class Controller:
     def __init__(self, extract_dir, search_dir, completed_path):
         self.root = Tk()
         self.view = View(self.root)
-        self.view.sidePanel.discover.bind(self.discover)
-        self.view.sidePanel.extract.bind(self.extract)
+        self.view.sidePanel.discover.bind("<Button>", self.discover)
+        self.view.sidePanel.extract.bind("<Button>", self.extract)
         self.files = Files(extract_dir=extract_dir, search_dir=search_dir)
         self.completed_path = completed_path
         '''add the view as class vars'''
 
-    def discover(self):
+    def discover(self, event):
         self.files.discovery(self.read_completed_extractions)
         self.view.fill_tree(self.files)
 
