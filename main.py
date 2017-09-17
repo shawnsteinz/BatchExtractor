@@ -1,13 +1,21 @@
 from controller import *
+from installer import *
 
-'''reading settings from file etc can happen here'''
-'''checking if settings file exsit'''
-'''run install instructions in cmd if not'''
+''' Settings and completed file will always next to the installer script
+'''
+def run(settings):
+    controller = Controller(extract_dir=settings['extract_dir'],
+                            search_dir=settings['search_dir'],
+                            location_7zip=settings['location_7zip'],
+                            location_completed_extractions=settings['location_completed_extractions'])
+    controller.run()
+
 
 if __name__ == '__main__':
-    controller = Controller(extract_dir=r'C:\Users\Misja\Downloads\Extracted Torrents',
-                            search_dir=r'C:\Users\Misja\Downloads\Torrents',
-                            completed_path=r'C:\Users\Misja\Downloads\completed_extractions.txt')
+    if(file_exists('settings.txt')) and file_exists('completed.txt'):
+        run(read_settings_file())
 
-    controller.run()
+    else :
+        run_installation()
+        run(read_settings_file())
 

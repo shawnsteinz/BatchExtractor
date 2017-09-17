@@ -16,7 +16,7 @@ class View:
         for i in self.tree.get_children():
             self.tree.delete(i)
 
-        for item in file_list.files:
+        for item in file_list:
             self.tree.insert('', 'end', values=item.file_location)
 
 

@@ -4,10 +4,11 @@ from os import stat, path, walk
 
 '''Builds a list of file objects'''
 class Files():
-    def __init__(self, search_dir, extract_dir, allowed_file_ext=('.rar', '.zip', '.7z')):
+    def __init__(self, search_dir, extract_dir, location_7zip, allowed_file_ext=('.rar', '.zip', '.7z')):
         self.files = []
         self.search_dir = search_dir
         self.extract_dir = extract_dir
+        self.location_7zip = location_7zip
         self.allowed_file_ext = allowed_file_ext
 
     '''Searches a folder for files and fills the file list with file classes. 
@@ -18,19 +19,20 @@ class Files():
             for file_name in files:
                 if file_name.lower().endswith(tuple(self.allowed_file_ext)) \
                         and file_name.lower() not in files_to_skip:
-                    self.files.append(File(path.join(directory_path, file_name), self.extract_dir))
+                    self.files.append(File(path.join(directory_path, file_name), self.extract_dir, self.location_7zip))
 
 '''File object that can extract himself'''
 class File():
-    def __init__(self, file_location, extract_destination):
+    def __init__(self, file_location, extract_destination, location_7zip):
         self.file_location = file_location
         self.extract_destination = extract_destination
+        self.location_7zip=location_7zip
         self.size = self.calculate_size()
 
     '''extracts the file by calling the command line 7zip program return True of False'''
     def extract(self):
         prm = ('7z', 'x', '-o')
-        return call('%s %s %s %s%s' % (prm[0], prm[1] , self.file_location, prm[2], self.extract_destination), shell=True)
+        return call('%s & %s %s %s %s%s' % (self.location_7zip, prm[0], prm[1] , self.file_location, prm[2], self.extract_destination), shell=True)
 
     def calculate_size(self):
         size = 0
