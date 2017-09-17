@@ -8,6 +8,8 @@ class Controller:
         self.files_to_skip = []  # from global
         self.root = Tk()
         self.view = View(self.root)
+        self.view.sidePanel.dicovery.bind(self.dicovery)
+        self.view.sidePanel.extract.bind(self.extract)
         self.files = Files(allowed_file_ext=['.rar', '.zip', '.7z'], extract_dir='', files_to_skip=self.files_to_skip,
                            search_dir='')
         '''add the view as class vars'''
