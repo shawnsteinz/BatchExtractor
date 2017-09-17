@@ -15,8 +15,8 @@ class Controller:
 
     def discover(self):
         self.files.discovery(self.read_completed_extractions)
-        '''set the view to the new files'''
-
+        self.view.fill_tree(self.files)
+        
     def extract(self):
         for file in self.files.files:
             if file.extract() is True:
