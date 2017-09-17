@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import ttk
-import BatchExtractor.Gui.Settings_Screen
-import BatchExtractor.Gui.Main_Screen
+import Gui.Settings_Screen
+import Gui.Main_Screen
 
 
 class Gui_Builder:

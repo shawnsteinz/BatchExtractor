@@ -3,7 +3,7 @@ from view import *
 
 class Controller():
     def __init__(self):
-        self.files_to_skip = [] # read the files form a text file
+        self.files_to_skip = [] # from global
         self.files = Files(allowed_file_ext=['.rar', '.zip', '.7z'], extract_dir='', files_to_skip=self.files_to_skip, search_dir='')
         '''add the view as class vars'''
 
