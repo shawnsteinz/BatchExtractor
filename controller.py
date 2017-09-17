@@ -10,7 +10,7 @@ class Controller:
         self.view = View(self.root)
         self.view.sidePanel.discover.bind(self.discover)
         self.view.sidePanel.extract.bind(self.extract)
-        self.files = Files( extract_dir='', search_dir='')
+        self.files = Files(extract_dir='', search_dir='')
         '''add the view as class vars'''
 
     def discover(self):
