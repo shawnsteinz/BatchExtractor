@@ -13,7 +13,7 @@ class View:
         self.tree.pack()
 
     def fill_tree(self, file_list):
-        for item in file_list.files:
+        for item in file_list:
             self.tree.insert('', 'end', values=item.file_location)
 
 

@@ -13,6 +13,7 @@ class Files():
     '''Searches a folder for files and fills the file list with file classes. 
     Optional add an additional filter to skip files'''
     def discovery(self, files_to_skip):
+        self.files = []
         for directory_path, directory_name, files in walk(self.search_dir):
             for file_name in files:
                 if file_name.lower().endswith(tuple(self.allowed_file_ext)) \
