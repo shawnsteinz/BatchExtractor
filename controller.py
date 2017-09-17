@@ -14,8 +14,8 @@ class Controller:
         '''add the view as class vars'''
 
     def discover(self, event):
-        self.files.discovery(self.read_completed_extractions)
-        self.view.fill_tree(self.files)
+        self.files.discovery(self.read_completed_extractions())
+        self.view.fill_tree(self.files.files)
 
     def extract(self):
         for file in self.files.files:
