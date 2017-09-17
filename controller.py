@@ -16,12 +16,12 @@ class Controller:
     def discover(self):
         self.files.discovery(self.read_completed_extractions)
         self.view.fill_tree(self.files)
-        
+
     def extract(self):
         for file in self.files.files:
             if file.extract() is True:
                 self.write_completed_extraction(file.file_location)
-            '''update progress bar and file in the mian screen'''
+            '''update progress bar and file in the main screen'''
 
     def read_completed_extractions(self):
         with open(self.completed_path, 'r') as f:

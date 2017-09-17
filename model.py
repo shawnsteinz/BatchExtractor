@@ -1,5 +1,5 @@
 from subprocess import call
-from os import path, walk
+from os import stat, path, walk
 
 
 '''Builds a list of file objects'''
@@ -24,10 +24,26 @@ class File():
     def __init__(self, file_location, extract_destination):
         self.file_location = file_location
         self.extract_destination = extract_destination
+        self.stat_info = stat(file_location)
+        # self.size = self.calculate_size()
 
     '''extracts the file by calling the command line 7zip program return True of False'''
     def extract(self):
         prm = ('7z', 'x', '-o')
         return call('%s %s %s %s%s' % (prm[0], prm[1] , self.file_location, prm[2], self.extract_destination), shell=True)
+    '''
+    def calculate_size(self):
+        for directory_path, directory_name, files in walk(path.dirname(self.file_location)):
+            for file_name in files:
+                if file_name.lower().endswith(tuple([".r%.2d" % i for i in range(1000)])):
+                    size = size + stat(path.join(directory_path, file_name)).st_size
+        return size
 
-
+    def get_formatted_size(self, suffix='B'):
+        number = self.archive_size
+        for unit in ['', 'Ki', 'Mi', 'Gi', 'Ti', 'Pi', 'Ei', 'Zi']:
+            if abs(number) < 1024.0:
+                return "%3.1f%s%s" % (number, unit, suffix)
+            number /= 1024.0
+        return "%.1f%s%s" % (number, 'Yi', suffix)
+    '''
