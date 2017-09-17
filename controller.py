@@ -1,4 +1,3 @@
-from main import path_to_file
 from model import Files
 from view import *
 from tkinter import *
@@ -6,31 +5,26 @@ from tkinter import *
 
 class Controller:
     def __init__(self):
+        self.files_to_skip = []  # from global
         self.root = Tk()
         self.view = View(self.root)
-        self.path_to_completed_extractions = r'C:\Users\Misja\Documents\filestoskip.txt'
-        self.files = Files(extract_dir=r'C:\Users\Misja\Downloads\Try', search_dir=r'C:\Users\Misja\Downloads\Torrents')
+        self.view.sidePanel.dicovery.bind(self.dicovery)
+        self.view.sidePanel.extract.bind(self.extract)
+        self.files = Files(allowed_file_ext=['.rar', '.zip', '.7z'], extract_dir='', files_to_skip=self.files_to_skip,
+                           search_dir='')
         '''add the view as class vars'''
 
-    def discovery(self):
-        self.files.discovery(self.read_completed_extractions())
+    def dicovery(self):
+        self.model.discovery()
         '''set the view to the new files'''
 
     def extract(self):
-        for file in self.files.files:
-            if file.extract() is True:
-                self.write_completed_extraction(file.file_location)
-                '''update progress bar and file in the mian screen'''
+        for file in self.model.files:
+            file.extract()
+            '''update progress bar and file in the mian screen'''
+            '''updated the files to skip list'''
+        '''write the files to skip to file'''
 
     def run(self):
         self.root.deiconify()
         self.root.mainloop()
-
-    def read_completed_extractions(self):
-        with open(self.path_to_completed_extractions, 'r') as f:
-            files_to_skip = f.readlines()
-            return files_to_skip
-
-    def write_completed_extraction(self, file_location):
-        with open(self.path_to_completed_extractions, 'a') as f:
-            f.write(file_location)
