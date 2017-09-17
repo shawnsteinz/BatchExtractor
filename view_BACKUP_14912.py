@@ -14,16 +14,13 @@ class View:
 
     def fill_tree(self, file_list):
 <<<<<<< HEAD
-<<<<<<< .merge_file_a07208
         for item in file_list:
 =======
-=======
->>>>>>> 8a271ec4dd590f47c237bdda7d4c327f40204556
         for i in self.tree.get_children():
             self.tree.delete(i)
 
         for item in file_list.files:
->>>>>>> .merge_file_a22864
+>>>>>>> 8a271ec4dd590f47c237bdda7d4c327f40204556
             self.tree.insert('', 'end', values=item.file_location)
 
 
