@@ -7,17 +7,14 @@ class View:
         self.tree = ttk.Treeview(master)
         self.sidePanel = SidePanel(master)
         self.tree["columns"] = "name"
-        self.tree.column("name", width=200)
+        self.tree.column("name", width=1000)
         self.tree.heading("name", text="Name")
-
-        self.tree.insert("", 0, text="C:\downloads\GoT", values="Game_of_Thrones")
-        self.tree.insert("", 0, text="C:\downloads\Suits", values="Suits")
-
+        self.tree['show'] = 'headings'
         self.tree.pack()
 
     def fill_tree(self, file_list):
-        for item in file_list:
-            self.tree.insert('', 'end', values=item)
+        for item in file_list.files:
+            self.tree.insert('', 'end', values=item.file_location)
 
 
 class SidePanel:
