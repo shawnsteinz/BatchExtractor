@@ -5,11 +5,12 @@ from utilities import write, read, extract
 
 
 class Controller:
-    def __init__(self, extract_dir, search_dir, log_file_name):
+    def __init__(self, extract_dir, search_dir, log_file_name, error_log_file_name):
         self.extract_dir = extract_dir
-        self.finder = ArchiveFinder(search_dir=search_dir)
+        self.finder = ArchiveFinder(search_dir)
         self.found_archives = []
         self.log_file_name = log_file_name
+        self.error_log_file_name = error_log_file_name
         self.root = Tk()
         self.view = View(self.root)
         self.view.sidePanel.search.bind("<Button>", self.search)
@@ -24,9 +25,10 @@ class Controller:
         for archive in self.found_archives:
             result = extract(archive.file_name, self.extract_dir)
             if result['status']:
-                write(file_name=self.log_file_name, value=archive.file_name)
+                write(self.log_file_name, archive.file_name)
                 return result
             else:
+                write(self.error_log_file_name, result['msg'])
                 return result
 
     def run(self):

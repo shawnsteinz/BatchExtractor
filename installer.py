@@ -3,6 +3,7 @@ from os import path
 
 LOG_FILE_NAME='log.txt'
 SETTINGS_FILE_NAME='settings.txt'
+ERROR_LOG_FILE_NAME='errors.txt'
 
 
 def get_full_file_name(file_name):
@@ -27,6 +28,10 @@ def create_log_file():
     open(get_full_file_name(LOG_FILE_NAME), 'w')
 
 
+def create_error_log_file():
+    open(get_full_file_name(ERROR_LOG_FILE_NAME), 'w')
+
+
 def read_settings_file():
     dct = {}
     with open(get_full_file_name(SETTINGS_FILE_NAME), 'r') as f:
@@ -45,6 +50,7 @@ def run_installation():
     if (input('Installation is starting this will wipe all settings, do you want to continue? type (yes/no)')) \
             in ['yes', 'y', 'Yes', 'Y']:
         create_log_file()
+        create_error_log_file()
         create_settings_file(prompt_user())
     else :
         print('Installation aborted')
