@@ -28,8 +28,15 @@ class View:
         container.pack(side='top', fill='both', expand=True)
 
         self.list_header = ['Name']
-        self.tree = ttk.Treeview(columns=self.list_header, show="headings", style="Custom.Treeview")
-        self.tree.heading("Name", text="Name")
+        self.tree1 = ttk.Treeview(columns=self.list_header, show="headings", style="Custom.Treeview")
+        self.tree1.heading("Name", text="Name")
+
+        self.tree = ttk.Treeview(columns='status', style="Custom.Treeview")
+        self.tree.heading('#0', text='Name')
+        self.tree.heading('#1', text='Status')
+        self.tree.column('#1', stretch='yes')
+        self.tree.column('#0', stretch='yes')
+
         self.sidePanel = SidePanel(master)
         self.progressbar = Progressbar(master)
         self.sidePanel.frame.pack(side="right", fill="x", expand=False)
@@ -52,7 +59,8 @@ class View:
         self.clear_tree()
 
         for item in files:
-            self.tree.insert('', 'end', values=item.display_name)
+            self.tree.insert('', 'end', text=item.display_name,
+                                 values=('Status', item))
 
     def clear_tree(self):
         for i in self.tree.get_children():
