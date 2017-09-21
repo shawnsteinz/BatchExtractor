@@ -52,7 +52,7 @@ class View:
         self.clear_tree()
 
         for item in files:
-            self.tree.insert('', 'end', values=item.file_name)
+            self.tree.insert('', 'end', values=item.display_name)
 
     def clear_tree(self):
         for i in self.tree.get_children():
