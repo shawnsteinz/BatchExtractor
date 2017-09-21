@@ -3,7 +3,7 @@ from installer import *
 
 
 def run_app(settings):
-    controller = Controller(settings['extract_dir'], settings['search_dir'], settings['log_file_name'])
+    controller = Controller(settings['extract_dir'], settings['search_dir'], settings['log_file_name'], settings['error_log_file_name'])
     controller.run()
 
 

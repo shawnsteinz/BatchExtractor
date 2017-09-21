@@ -21,7 +21,8 @@ def create_settings_file(user_input):
         for key, value in user_input.items():
             f.write(key + ';' + value + '\n')
         # not in the for loop since its not dependent on user input
-        f.write('log_file_name' + ';' + get_full_file_name('log.txt'))
+        f.write('log_file_name' + ';' + get_full_file_name('log.txt') + '\n')
+        f.write('error_log_file_name' + ';' + get_full_file_name('errors.txt') + '\n')
 
 
 def create_log_file():
