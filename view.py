@@ -60,7 +60,7 @@ class View:
 
         for item in files:
             self.tree.insert('', 'end', text=item.display_name,
-                                 values=('Status', item))
+                             values=(item.status, item))
 
     def clear_tree(self):
         for i in self.tree.get_children():

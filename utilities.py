@@ -3,11 +3,11 @@ import subprocess
 
 def extract(archive_name, extract_dir):
     try:
-        output = subprocess.check_output(['7z', 'e', archive_name,'-y', '-o' + extract_dir])
+        output = subprocess.check_output(['7z', 'e', archive_name, '-y', '-o' + extract_dir])
     except subprocess.CalledProcessError as e:
-        return {'name': archive_name, 'status': False, 'msg': e.output}
+        return {'status': False, 'msg': e.output}
     else:
-        return {'name': archive_name, 'status': True, 'msg': output}
+        return {'status': True, 'msg': output}
 
 
 def write(file_name, value):

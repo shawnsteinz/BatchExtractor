@@ -1,9 +1,6 @@
 import sys
 from os import path
-
-LOG_FILE_NAME='log.txt'
-SETTINGS_FILE_NAME='settings.txt'
-ERROR_LOG_FILE_NAME='errors.txt'
+from constants import *
 
 
 def get_full_file_name(file_name):
@@ -17,7 +14,7 @@ def prompt_user():
 
 
 def create_settings_file(user_input):
-    with open(get_full_file_name(SETTINGS_FILE_NAME) , 'w') as f:
+    with open(get_full_file_name(SETTINGS_FILE_NAME), 'w') as f:
         for key, value in user_input.items():
             f.write(key + ';' + value + '\n')
         # not in the for loop since its not dependent on user input
@@ -53,5 +50,5 @@ def run_installation():
         create_log_file()
         create_error_log_file()
         create_settings_file(prompt_user())
-    else :
+    else:
         print('Installation aborted!')
