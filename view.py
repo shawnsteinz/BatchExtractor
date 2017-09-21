@@ -17,14 +17,14 @@ class View:
             self.tree.delete(i)
 
         for item in file_list:
-            self.tree.insert('', 'end', values=item.file_location)
+            self.tree.insert('', 'end', values=item.file_name)
 
 
 class SidePanel:
     def __init__(self, root):
         self.frame = tk.Frame(root)
         self.frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
-        self.discover = tk.Button(self.frame, text="Discover")
-        self.discover.pack(side="top", fill=tk.BOTH)
+        self.search = tk.Button(self.frame, text="Search")
+        self.search.pack(side="top", fill=tk.BOTH)
         self.extract = tk.Button(self.frame, text="Extract")
         self.extract.pack(side="top", fill=tk.BOTH)

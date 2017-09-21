@@ -1,48 +1,50 @@
 import sys
-import os
+from os import path
+
+LOG_FILE_NAME='log.txt'
+SETTINGS_FILE_NAME='settings.txt'
 
 
-def file_location(file_name):
-    return os.path.normcase(os.path.join(os.path.dirname(sys.argv[0]), file_name))
+def get_full_file_name(file_name):
+    return path.normcase(path.join(path.dirname(sys.argv[0]), file_name))
 
 
-def prompt():
-    dct = {}
-    dct['location_7zip'] = str(input('Please input your path to 7zip:'))
-    dct['search_dir'] = str(input('Please input your path to torrents:'))
-    dct['extract_dir'] = str(input('Please input your path where you would like to extract the torrents:'))
+def prompt_user():
+    dct = {'search_dir': str(input('Please specify where we can search for torrents:')),
+           'extract_dir': str(input('Please specify where we can put the extracted torrents:'))}
     return dct
 
 
 def create_settings_file(user_input):
-    with open(file_location(file_name='settings.txt') , 'w') as f:
+    with open(get_full_file_name(SETTINGS_FILE_NAME) , 'w') as f:
         for key, value in user_input.items():
             f.write(key + ';' + value + '\n')
         # not in the for loop since its not dependent on user input
-        f.write('location_completed_extractions' + ';' + file_location('completed.txt'))
+        f.write('log_file_name' + ';' + get_full_file_name('log.txt'))
 
 
-def create_completed_file():
-    open(file_location(file_name='completed.txt'), 'w')
+def create_log_file():
+    open(get_full_file_name(LOG_FILE_NAME), 'w')
 
 
 def read_settings_file():
     dct = {}
-    with open(file_location(file_name='settings.txt'), 'r') as f:
+    with open(get_full_file_name(SETTINGS_FILE_NAME), 'r') as f:
         lines = f.readlines()
         for line in lines:
             values = line.split(';')
             dct[values[0]] = values[1].strip()
-    return dct;
+    return dct
+
 
 def file_exists(file_name):
-    return os.path.isfile(file_location(file_name=file_name))
+    return path.isfile(get_full_file_name(file_name))
 
 
 def run_installation():
     if (input('Installation is starting this will wipe all settings, do you want to continue? type (yes/no)')) \
             in ['yes', 'y', 'Yes', 'Y']:
-        create_completed_file()
-        create_settings_file(prompt())
+        create_log_file()
+        create_settings_file(prompt_user())
     else :
         print('Installation aborted')
