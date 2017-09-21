@@ -1,4 +1,4 @@
-from os import stat, path, walk
+from os import stat, path, walk, sep
 
 
 class ArchiveFinder:
@@ -21,6 +21,7 @@ class ArchiveFinder:
 class Archive:
     def __init__(self, file_name):
         self.file_name = file_name
+        self.display_name = file_name.replace(sep, '/')
 
     def calculate_archive_size(self):
         size = 0

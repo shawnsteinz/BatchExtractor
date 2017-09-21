@@ -54,4 +54,4 @@ def run_installation():
         create_error_log_file()
         create_settings_file(prompt_user())
     else :
-        print('Installation aborted')
+        print('Installation aborted!')
