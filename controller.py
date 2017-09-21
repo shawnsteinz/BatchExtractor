@@ -38,4 +38,6 @@ class Controller:
 
     def run(self):
         self.root.deiconify()
+        self.root.geometry("%dx%d" % (800, 600))
+        self.root.title('BatchExtractor')
         self.root.mainloop()
