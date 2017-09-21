@@ -47,7 +47,7 @@ def file_exists(file_name):
 
 
 def run_installation():
-    if (input('Installation is starting this will wipe all settings, do you want to continue? type (yes/no)')) \
+    if (input('Installation is starting this will wipe all settings, do you want to continue? type (yes/no):')) \
             in ['yes', 'y', 'Yes', 'Y']:
         create_log_file()
         create_error_log_file()

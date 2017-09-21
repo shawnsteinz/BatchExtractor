@@ -17,7 +17,7 @@ class Controller:
         self.view.sidePanel.extract.bind("<Button>", self.extract)
 
     def search(self, event):
-        files_to_skip = read(file_name=self.log_file_name)
+        files_to_skip = read(self.log_file_name)
         self.found_archives = self.finder.search(files_to_skip)
         self.view.fill_tree(self.found_archives)
 
@@ -30,6 +30,11 @@ class Controller:
             else:
                 write(self.error_log_file_name, result['msg'])
                 return result
+
+    def exclude(self, event):
+        file_name = ''
+        self.found_archives = [i for i in self.found_archives if i.file_name != file_name]
+        write(self.error_log_file_name, file_name)
 
     def run(self):
         self.root.deiconify()
