@@ -4,6 +4,8 @@ from tkinter import *
 from utilities import write, read, extract
 from constants import *
 
+'''Controller'''
+
 
 class Controller:
     def __init__(self, extract_dir, search_dir, log_file_name, error_log_file_name):

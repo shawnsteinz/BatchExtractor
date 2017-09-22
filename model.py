@@ -1,5 +1,7 @@
-from os import stat, path, walk, sep
+from os import path, walk, sep
 from constants import *
+
+'''Model'''
 
 
 class ArchiveFinder:

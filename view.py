@@ -1,6 +1,8 @@
 import tkinter.ttk as ttk
 import tkinter as tk
 
+'''View'''
+
 
 class View:
     def __init__(self, master):
