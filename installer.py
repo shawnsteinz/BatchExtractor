@@ -1,6 +1,7 @@
 from os import path, makedirs
 from constants import LOG_FILE_NAME, ERROR_LOG_FILE_NAME, SETTINGS_FILE_NAME, RUN_SCRIPT_NAME
-from sys import argv
+from sys import argv, executable
+from winshell import shortcut, desktop
 
 
 def prompt_user():
@@ -51,6 +52,14 @@ def create_single_script(install_dir, script_name):
         for line in code:
             f.write(line)
 
+def create_shortcut(installpath):
+    filepath = path.join(desktop(), 'Unpacky.lnk')
+    with shortcut(filepath) as link:
+        link.path = executable
+        link.description = "Shortcut to Unpacky"
+        link.arguments = path.join(installpath, RUN_SCRIPT_NAME)
+        link.write()
+
 
 def run_installation():
     if (input('Installation is starting this will wipe all settings, do you want to continue? type (yes/no):')) \
@@ -60,6 +69,8 @@ def run_installation():
         create_files(settings['install_dir'], [ERROR_LOG_FILE_NAME, SETTINGS_FILE_NAME, LOG_FILE_NAME])
         store_settings(settings)
         create_single_script(settings['install_dir'], RUN_SCRIPT_NAME)
+        if (input('Would you like us to add a shortcut on your desktop? type (yes/no):')) in ['yes']:
+            create_shortcut(settings['install_dir'])
     else:
         print('Installation aborted!')
 
