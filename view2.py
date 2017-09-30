@@ -65,9 +65,9 @@ class Window(QWidget):
         self.extract = QPushButton("Extract")
 
         main_layout = QGridLayout()
-        main_layout.addWidget(self.main_view, 0, 0, 1, 3)
-        main_layout.addWidget(self.extract, 4, 0, 1, 2)
-        main_layout.addWidget(self.discover, 4, 2)
+        main_layout.addWidget(self.main_view, 0, 0, 1, 4)
+        main_layout.addWidget(self.extract, 1, 0, 1, 2)
+        main_layout.addWidget(self.discover, 1, 2, 1, 2)
         self.main_group_box.setLayout(main_layout)
 
         main_layout = QVBoxLayout()
