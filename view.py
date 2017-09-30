@@ -38,12 +38,10 @@ class View:
         self.tree.heading('#1', text='Status')
         self.tree.column('#1', stretch='yes')
         self.tree.column('#0', stretch='yes')
-
         self.sidePanel = SidePanel(master)
         self.progressbar = Progressbar(master)
         self.sidePanel.frame.pack(side="right", fill="x", expand=False)
         self.progressbar.frame.pack(side="top", fill="x", expand=False)
-
         vsb = ttk.Scrollbar(orient="vertical",
                             command=self.tree.yview)
         hsb = ttk.Scrollbar(orient="horizontal",
