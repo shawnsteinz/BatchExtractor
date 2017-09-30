@@ -1,83 +1,51 @@
-import tkinter.ttk as ttk
-import tkinter as tk
+from PyQt5.QtCore import (Qt)
+from PyQt5.QtGui import QStandardItemModel
+from PyQt5.QtWidgets import (QGridLayout, QPushButton,
+                             QGroupBox, QTreeView, QVBoxLayout,
+                             QWidget)
 
-'''View'''
+NAME, STATUS = range(2)
 
 
-class View:
-    def __init__(self, master):
+class View(QWidget):
+    def __init__(self, window):
+        super(View, self).__init__()
 
-        style = ttk.Style()
-        style.element_create("Custom.Treeheading.border", "from", "default")
-        style.configure(".", font=('Helvetica', 8))
-        style.layout("Custom.Treeview.Heading", [
-            ("Custom.Treeheading.cell", {'sticky': 'nswe'}),
-            ("Custom.Treeheading.border", {'sticky': 'nswe', 'children': [
-                ("Custom.Treeheading.padding", {'sticky': 'nswe', 'children': [
-                    ("Custom.Treeheading.image", {'side': 'right', 'sticky': ''}),
-                    ("Custom.Treeheading.text", {'sticky': 'we'})
-                ]})
-            ]}),
-        ])
+        self.main_group_box = QGroupBox("Main")
 
-        style.configure("Custom.Treeview.Heading",
-                        background="#383838", foreground="white", relief="ridge")
-        style.map("Custom.Treeview.Heading",
-                  relief=[('active', 'groove'), ('pressed', 'sunken')])
-        ttk.Style().configure("Custom.Treeview", background="#383838",
-                              foreground="white")
-        container = ttk.Frame(master)
-        container.pack(side='top', fill='both', expand=True)
+        self.main_view = QTreeView()
+        self.main_view.setRootIsDecorated(False)
+        self.main_view.setAlternatingRowColors(True)
 
-        self.list_header = ['Name']
-        self.tree1 = ttk.Treeview(columns=self.list_header, show="headings", style="Custom.Treeview")
-        self.tree1.heading("Name", text="Name")
+        self.discover = QPushButton("Discover")
+        self.extract = QPushButton("Extract")
 
-        self.tree = ttk.Treeview(columns='status', style="Custom.Treeview")
-        self.tree.heading('#0', text='Name')
-        self.tree.heading('#1', text='Status')
-        self.tree.column('#1', stretch='yes')
-        self.tree.column('#0', stretch='yes')
-        self.sidePanel = SidePanel(master)
-        self.progressbar = Progressbar(master)
-        self.sidePanel.frame.pack(side="right", fill="x", expand=False)
-        self.progressbar.frame.pack(side="top", fill="x", expand=False)
-        vsb = ttk.Scrollbar(orient="vertical",
-                            command=self.tree.yview)
-        hsb = ttk.Scrollbar(orient="horizontal",
-                            command=self.tree.xview)
-        self.tree.configure(yscrollcommand=vsb.set,
-                            xscrollcommand=hsb.set)
-        self.tree.grid(column=0, row=0, sticky='nsew', in_=container)
-        vsb.grid(column=1, row=0, sticky='ns', in_=container)
-        hsb.grid(column=0, row=1, sticky='ew', in_=container)
-        container.grid_columnconfigure(0, weight=1)
-        container.grid_rowconfigure(0, weight=1)
+        main_layout = QGridLayout()
+        main_layout.addWidget(self.main_view, 0, 0, 1, 4)
+        main_layout.addWidget(self.extract, 1, 0, 1, 2)
+        main_layout.addWidget(self.discover, 1, 2, 1, 2)
+        self.main_group_box.setLayout(main_layout)
+
+        main_layout = QVBoxLayout()
+        main_layout.addWidget(self.main_group_box)
+        self.setLayout(main_layout)
+
+        self.setWindowTitle("BatchExtractor")
+        self.resize(1200, 600)
+
+        self.model = QStandardItemModel(0, 2, window)
+
+        self.model.setHeaderData(NAME, Qt.Horizontal, "Name")
+        self.model.setHeaderData(STATUS, Qt.Horizontal, "Status")
+
+        self.main_view.setModel(self.model)
+
+    def add_file(self, name, status):
+        self.model.insertRow(0)
+        self.model.setData(self.model.index(0, NAME), name)
+        self.model.setData(self.model.index(0, STATUS), status)
 
     def fill_tree(self, files):
-
-        self.clear_tree()
-
+        self.model.removeRows(0, self.model.rowCount())
         for item in files:
-            self.tree.insert('', 'end', text=item.display_name,
-                             values=(item.status, item))
-
-    def clear_tree(self):
-        for i in self.tree.get_children():
-            self.tree.delete(i)
-
-
-class SidePanel:
-    def __init__(self, root):
-        self.frame = tk.Frame(root)
-        self.search = tk.Button(self.frame, text="Discover", relief='raised')
-        self.search.pack(side='left', fill='both')
-        self.extract = tk.Button(self.frame, text="Extract", relief='raised')
-        self.extract.pack(side='left', fill='both')
-
-
-class Progressbar:
-    def __init__(self, root):
-        self.frame = tk.Frame(root)
-        self.progressbar = ttk.Progressbar(self.frame, orient='horizontal', mode='determinate')
-        self.progressbar.pack(side='left', fill='both', expand=True)
+            self.add_file(item.display_name, item.status)

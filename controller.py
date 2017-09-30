@@ -1,23 +1,26 @@
 from model import ArchiveFinder
+
 from view import *
-from tkinter import *
 from utilities import write, read, extract
 from constants import *
+import sys
+from PyQt5.QtWidgets import (QApplication)
 
 '''Controller'''
 
 
 class Controller:
     def __init__(self, extract_dir, search_dir, log_file_name, error_log_file_name):
+        self.app = QApplication(sys.argv)
+        self.window = View(self.app)
         self.extract_dir = extract_dir
         self.finder = ArchiveFinder(search_dir)
         self.found_archives = []
         self.log_file_name = log_file_name
         self.error_log_file_name = error_log_file_name
-        self.root = Tk()
-        self.view = View(self.root)
-        self.view.sidePanel.search.bind("<Button>", self.search)
-        self.view.sidePanel.extract.bind("<Button>", self.extract)
+
+        self.window.discover.clicked.connect(self.search)
+        self.window.extract.clicked.connect(self.extract)
 
     def search(self, event):
         files_to_skip = read(self.log_file_name)
@@ -25,8 +28,7 @@ class Controller:
         self.__update_tree()
 
     def __update_tree(self):
-        self.view.fill_tree(self.found_archives)
-        self.root.update()
+        self.window.fill_tree(self.found_archives)
 
     def __update_archive(self, archive):
         for i, value in enumerate(self.found_archives):
@@ -57,7 +59,5 @@ class Controller:
                 write(self.error_log_file_name, file_name)
 
     def run(self):
-        self.root.deiconify()
-        self.root.geometry("%dx%d" % (1600, 600))
-        self.root.title('BatchExtractor')
-        self.root.mainloop()
+        self.window.show()
+        sys.exit(self.app.exec_())
